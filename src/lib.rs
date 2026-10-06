@@ -13,18 +13,15 @@ use crate::cpu::Cpu;
 use crate::rom::Rom;
 use wasm_bindgen::prelude::*;
 
-// Add the attribute here
 #[wasm_bindgen]
 pub struct Emulator {
     cpu: Cpu,
     bus: Bus,
-    // HTML Canvas expects 4 bytes per pixel (RGBA)
     rgba_buffer: Vec<u8>,
 }
 
 #[wasm_bindgen]
 impl Emulator {
-    // Define the constructor explicitly
     #[wasm_bindgen(constructor)]
     pub fn new(rom_bytes: &[u8]) -> Emulator {
         let rom = Rom::new(&rom_bytes.to_vec());
@@ -67,7 +64,7 @@ impl Emulator {
         self.bus.controller.controller1 = controller_state;
     }
 
-    // Return a copy of the buffer to JS (converted to Uint8Array automatically)
+    // Return a copy of the RGBA buffer to JS
     pub fn get_pixels(&self) -> Vec<u8> {
         self.rgba_buffer.clone()
     }
